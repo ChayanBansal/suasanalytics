@@ -1,7 +1,52 @@
-{% extends 'base.html' %}
-
+{% extends 'layout.html' %}
 {% block content %}
-    This is temp block content.
-    This page will have 4 options to select from.
+<style>
+    
+    .central-container{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .item{
+        margin-bottom: 1rem;
+    }
+    .item button{
+        font-size: 1.2rem;
+        padding: 2rem;
+        width: 100%;
+    }
+
+    </style>
+    
+    
+<div class="central-container">
+    <div class="title">
+        <div class="alert">Please choose an option:</div>
+    </div>
+
+    <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
+        <form action="" method="post">
+        <div class="item">
+            <button class="btn btn-success">Corelation of XII percentage with SGPA (UG)</button>
+        </div>
+        <div class="item">    
+                    <button class="btn btn-primary">Corelation of Graduation percentage with SGPA (PG)</button>
+        </div>
+        <div class="item">
+                <button class="btn btn-success disabled">Corelation of Hostel Admission with SGPA</button>
+
+        </div>
+        <div class="item">
+                <button class="btn btn-primary disabled">Corelation of Attendance with SGPA</button>
+
+        </div>
+        {% csrf_token %}
+    </form>
+    </div>
+</div>
 {% endblock content %}
 

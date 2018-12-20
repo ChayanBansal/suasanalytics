@@ -24,4 +24,3 @@ def login_user(request):
     else:
         return render(request,'users/login.html',{})
 
-
