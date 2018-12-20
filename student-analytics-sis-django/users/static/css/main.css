@@ -1,0 +1,17 @@
+
+
+.central-container{
+    position: absolute;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    top: 0;
+}
+#welcome{
+    font-size: 2.5rem;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 5rem;
+}
