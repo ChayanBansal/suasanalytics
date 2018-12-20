@@ -17,7 +17,8 @@ def login_user(request):
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
 
-            return render(request,'users/login.html',{"error":"Successufully logged in"})
+            return redirect('../dashboard/')
+            #return render(request,'home.html',{"error":"Successufully logged in"})
         else:
             context={
                 "error":"Please make sure your username and password is correct!"
