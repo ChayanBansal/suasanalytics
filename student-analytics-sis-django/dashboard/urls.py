@@ -1,5 +1,8 @@
 from django.urls import path
-from .views
+from . import views
+
+app_name="dashboard"
+
 urlpatterns=[
-    path('^$', )
+    path('', views.home_view, name="home")
 ]
