@@ -14,6 +14,9 @@ def login_user(request):
         if user:
             login(request,user)
             request.session['username']=username
+            if 'next' in request.POST:
+                return redirect(request.POST.get('next'))
+
             return redirect('../dashboard/')
             #return render(request,'home.html',{"error":"Successufully logged in"})
         else:
