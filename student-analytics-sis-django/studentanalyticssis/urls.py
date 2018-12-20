@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from dashboard.views import index_view
-from users.views import login_user
+from users.views import login_user,logout
 
 urlpatterns = [
     path('', index_view, name="index"),

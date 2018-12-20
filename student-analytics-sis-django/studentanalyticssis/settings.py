@@ -125,3 +125,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'dashboard:home'
+LOGIN_URL='/login/'
