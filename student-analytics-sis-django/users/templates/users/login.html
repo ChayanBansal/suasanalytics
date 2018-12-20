@@ -51,6 +51,9 @@
 							Proceed
 						</button>
 					</div>
+					{% if request.GET.next %}
+						<input type="hidden" name="next" value="{{request.GET.next}}">
+					{% endif %}
 					{% if error %}
 					<p class="error"><strong>Error:</strong> {{ error }}
 						{% endif %}
