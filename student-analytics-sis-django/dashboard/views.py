@@ -14,7 +14,7 @@ def home_view(request):
 		correl_type=int(request.POST['correl_type'])
 		
 		if correl_type==1:
-			return redirect('dashboard:corr_view3')
+			return redirect('dashboard:corr_view3') #Use namespace : to resolve URL name!!
 	
 	context={}
 	return render(request, 'dashboard/home.html', context)
