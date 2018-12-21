@@ -9,8 +9,10 @@ def index_view(request):
 @login_required
 def home_view(request):
 
-    context={}
-    return render(request, 'dashboard/home.html', context)
+	if request.method=="POST": 	#Obtaining selected value of corelation options
+		print(request.POST['correl_type'])
+	context={}
+	return render(request, 'dashboard/home.html', context)
 
 def corr_view3(request):
     my_form = CorrForm()
