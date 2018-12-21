@@ -1,8 +1,9 @@
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render,redirect,reverse
 from django.contrib.auth.decorators import login_required
 from .forms import CorrForm
-# Create your views here.
+
+
 def index_view(request):
     return render(request, 'index.html', {})
 
@@ -10,7 +11,11 @@ def index_view(request):
 def home_view(request):
 
 	if request.method=="POST": 	#Obtaining selected value of corelation options
-		print(request.POST['correl_type'])
+		correl_type=int(request.POST['correl_type'])
+		
+		if correl_type==1:
+			return redirect('dashboard:corr_view3')
+	
 	context={}
 	return render(request, 'dashboard/home.html', context)
 
