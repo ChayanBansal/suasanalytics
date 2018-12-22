@@ -10,60 +10,54 @@
                     {{ form.as_p }}
                 </div>
             </form>
-            
-            <nav>This is the nav bar</nav>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-            <script>
-                function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = jQuery.trim(cookies[i]);
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-    var csrftoken = getCookie('csrftoken');
-    function csrfSafeMethod(method) {
-        // these HTTP methods do not require CSRF protection
-        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-    }
-    $.ajaxSetup({
-        beforeSend: function(xhr, settings) {
-            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                xhr.setRequestHeader("X-CSRFToken", csrftoken);
-            }
-        }
-    });
-            function getEnrollYear(course_id){
-                $.ajax(
-                    {
-                        type:"POST",
-                        url: "corrView3/getEnrollYear",
-                        data:{
-                                course_id: course_id
-                        },
-                        success: function( data ) 
-                        {
-                            $.each(data, function(key, value) {   
-                                $('#id_enroll_year')
-                                    .append($("<option></option>")
-                                                .attr("value",key)
-                                                .text(value)); 
-                            });
-                        }
-                    });
-                }
-            </script>
+            <script src="/static/js/s.js"></script>
+            <script src="/static/js/ajax_corr_view3.js"></script>
         </div>
         <div class="col-6">
-        This is the plot
+            <canvas id="myChart"></canvas>
+            <div id="corr" class="form-control" style="margin-top:2%"></div>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+            <script>
+                    var color = Chart.helpers.color;
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var scatterChart = Chart.Scatter(ctx, {
+                        data: {
+                            datasets: [{
+                                label: 'Percentage vs SGPA',
+                                data: [],
+                                borderColor: "rgb(0,0,0,0)",
+                                pointBackgroundColor: window.chartColors.red,
+                                pointBorderColor: window.chartColors.red,
+                                backgroundColor: color(window.chartColors.red).alpha(0).rgbString(),
+                            }
+                        ]
+                        },
+
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    type: 'linear',
+                                    position: 'bottom',
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: "Percentage"
+                                        }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Value'
+                                    }
+					            }]
+
+                        }
+                    }});
+
+            
+            </script>
         </div>
     </div>
 </div>
