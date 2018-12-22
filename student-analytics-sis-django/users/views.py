@@ -28,3 +28,6 @@ def login_user(request):
     else:
         return render(request,'users/login.html',{})
 
+def logout_user(request):
+    logout(request)
+    return redirect('index')

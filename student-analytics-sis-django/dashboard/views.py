@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render,redirect,reverse
 from django.contrib.auth.decorators import login_required
 from .forms import CorrForm, getEnrollYearForm, getSectionForm
 import pandas as pd
@@ -20,8 +20,14 @@ def index_view(request):
 @login_required
 def home_view(request):
 
-    context={}
-    return render(request, 'dashboard/home.html', context)
+	if request.method=="POST": 	#Obtaining selected value of corelation options
+		correl_type=int(request.POST['correl_type'])
+		
+		if correl_type==1:
+			return redirect('dashboard:corr_view3') #Use namespace : to resolve URL name!!
+	
+	context={}
+	return render(request, 'dashboard/home.html', context)
 
 def corr_view3(request):
     my_form = CorrForm()
