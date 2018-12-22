@@ -27,3 +27,4 @@ def corr_view3_getEnrollYear(request):
     if request.method=="POST":
         
         return JsonResponse({'key1':'value1','key1':'value1', 'key1':'value1'})
+	
