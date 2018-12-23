@@ -16,9 +16,9 @@ class CorrForm(forms.Form):
     course      = forms.ChoiceField(choices=courses_list+[('All','All')])
     enroll_year = forms.ChoiceField(choices=[]) 
     section     = forms.ChoiceField(choices=[]) 
-    course.widget.attrs.update({'onChange': 'getEnrollYear(this.value)'})
-    enroll_year.widget.attrs.update({'onChange': 'getSection(this.value)'})
-    section.widget.attrs.update({'onChange': 'updateVisualization(this.value)'})
+    course.widget.attrs.update({'onChange': 'getEnrollYear(this.value)','class':'form-control'})
+    enroll_year.widget.attrs.update({'onChange': 'getSection(this.value)','class':'form-control'})
+    section.widget.attrs.update({'onChange': 'updateVisualization(this.value)','class':'form-control'})
 
 class getEnrollYearForm(CorrForm):
     def __init__(self, *args, **kwargs):
