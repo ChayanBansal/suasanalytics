@@ -29,10 +29,12 @@ def home_view(request):
 	context={}
 	return render(request, 'dashboard/home.html', context)
 
+@login_required
 def corr_view3(request):
     my_form = CorrForm()
     return render(request,'dashboard/corr_view3.html',{'form': my_form})
 
+@login_required
 def corr_view3_getEnrollYear(request):
     if request.method=="POST":
         my_form = getEnrollYearForm(request.POST, files=request.FILES)
@@ -49,6 +51,7 @@ def corr_view3_getEnrollYear(request):
             years=dict(mycursor.fetchall())
             return JsonResponse(years)
 
+@login_required
 def corr_view3_getSection(request):
     if request.method=="POST":
         course      = request.POST["course"]
@@ -68,6 +71,7 @@ def corr_view3_getSection(request):
         sections=dict(mycursor.fetchall())
         return JsonResponse(sections)
 
+@login_required
 def corr_view3_updateVisualization(request):
     if request.method == "POST":
         course      = request.POST["course"]
