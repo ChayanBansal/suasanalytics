@@ -21,7 +21,7 @@ function getEnrollYear(course_id){
         $.ajax(
             {
                 type:"POST",
-                url: "corrView3/getEnrollYear",
+                url: "getEnrollYear",
                 dataType: "json",
                 data:{
                         course: course_id
@@ -46,7 +46,7 @@ function getSection(enroll_year){
     $.ajax(
         {
             type:"POST",
-            url: "corrView3/getSection",
+            url: "getSection",
             dataType: "json",
             data:{
                     course: course_id,
@@ -72,7 +72,7 @@ function updateVisualization(section){
     $.ajax(
         {
             type:"POST",
-            url: "corrView3/updateVisualization",
+            url: "updateVisualization",
             dataType: "json",
             data:{
                     course: course_id,
