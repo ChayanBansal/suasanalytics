@@ -5,14 +5,11 @@ from .forms import CorrForm, getEnrollYearForm, getSectionForm
 import pandas as pd
 
 # Create your views here.
-import mysql.connector
-mydb = mysql.connector.connect(
-  host="127.0.0.1",
-  user="root",
-  passwd="suas@1234",
-  database="studentanalytics"
-)
-mycursor = mydb.cursor()
+
+
+from django.db import connections
+cursor = connections['studentanalytics'].cursor()
+
 
 def index_view(request):
     return render(request, 'index.html', {})
@@ -46,9 +43,9 @@ def corr_view3_getEnrollYear(request):
                 get_year="SELECT DISTINCT substr(created_date,1,4), substr(created_date,1,4) FROM `student_master` student"
             else:
                 get_year="SELECT DISTINCT substr(created_date,1,4), substr(created_date,1,4) FROM `student_master` student WHERE Course_ID ='"+str(course)+"'"
-            mycursor = mydb.cursor()
-            mycursor.execute(get_year)
-            years=dict(mycursor.fetchall())
+            cursor = connections['studentanalytics'].cursor()
+            cursor.execute(get_year)
+            years=dict(cursor.fetchall())
             return JsonResponse(years)
 
 @login_required
@@ -66,15 +63,15 @@ def corr_view3_getSection(request):
             get_section="SELECT DISTINCT Division, DIVISION FROM student_master WHERE substr(created_date,1,4)="+enroll_year
         else:
             get_section="SELECT DISTINCT Division, DIVISION FROM student_master"
-        mycursor = mydb.cursor()
-        mycursor.execute(get_section)
-        sections=dict(mycursor.fetchall())
+        cursor = connections['studentanalytics'].cursor()
+        cursor.execute(get_section)
+        sections=dict(cursor.fetchall())
         return JsonResponse(sections)
 
 @login_required
 def corr_view3_updateVisualization(request):
     if request.method == "POST":
-        mycursor = mydb.cursor()
+        cursor = connections['studentanalytics'].cursor()
         course      = request.POST["course"]
         enroll_year = request.POST["enroll_year"]
         section     = request.POST["section"]
@@ -96,10 +93,10 @@ def corr_view3_updateVisualization(request):
             query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND substr(sm.created_date,1,4)="+enroll_year
         else:
             query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course+" AND sm.Division='"+section+"'"
-        mycursor.execute(query)
-        result=mycursor.fetchall()
-        mydb.commit()
-        
+        cursor.execute(query)
+        result=cursor.fetchall()
+        print(list(result)[0])
+        result=list(result)
         df=pd.DataFrame(result,columns=['result','sgpa','cgpa','exam_name', 'percentage','classgrade','course_id'])
         df=df[(df["exam_name"]=="HSC / 12th or Equivalent") | (df["exam_name"]=="HSC / 12th (Sci); or Equivalent")]
         print(len(df))

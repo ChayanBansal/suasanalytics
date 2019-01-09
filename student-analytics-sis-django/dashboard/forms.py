@@ -1,16 +1,12 @@
 from django import forms
 import mysql.connector
 
-mydb = mysql.connector.connect(
-  host="127.0.0.1",
-  user="root",
-  passwd="suas@1234",
-  database="studentanalytics"
-)
-mycursor = mydb.cursor()
+from django.db import connections
+cursor = connections['studentanalytics'].cursor()
+
 get_courses="SELECT `course_master`.`CM_Course_Name`,`course_master`.`CM_Course_ID` FROM `studentanalytics`.`course_master`"
-mycursor.execute(get_courses)
-courses_list=[ ( str(y),str(x) ) for x,y in mycursor.fetchall()]
+cursor.execute(get_courses)
+courses_list=[ ( str(y),str(x) ) for x,y in cursor.fetchall()]
 
 class CorrForm(forms.Form):
     course      = forms.ChoiceField(choices=courses_list+[('All','All')])
@@ -34,5 +30,3 @@ class getEnrollYearForm(CorrForm):
 class getSectionForm(CorrForm):
     course      = forms.ChoiceField(choices=[])
     enroll_year = forms.ChoiceField(choices=[]) 
-
-mydb.close()
