@@ -80,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'sis_user_db',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'suas@1234',
         'HOST': '127.0.0.1'
     }
 }
@@ -126,3 +126,9 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'dashboard:home'
 LOGIN_URL='/login/'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}

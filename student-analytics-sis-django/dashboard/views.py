@@ -7,7 +7,7 @@ import pandas as pd
 # Create your views here.
 import mysql.connector
 mydb = mysql.connector.connect(
-  host="117.232.120.165",
+  host="127.0.0.1",
   user="root",
   passwd="suas@1234",
   database="studentanalytics"
@@ -74,6 +74,7 @@ def corr_view3_getSection(request):
 @login_required
 def corr_view3_updateVisualization(request):
     if request.method == "POST":
+        mycursor = mydb.cursor()
         course      = request.POST["course"]
         enroll_year = request.POST["enroll_year"]
         section     = request.POST["section"]
@@ -95,11 +96,13 @@ def corr_view3_updateVisualization(request):
             query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND substr(sm.created_date,1,4)="+enroll_year
         else:
             query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course+" AND sm.Division='"+section+"'"
-        mycursor=mydb.cursor()
         mycursor.execute(query)
-        result=mycursor.fetchall() 
+        result=mycursor.fetchall()
+        mydb.commit()
+        
         df=pd.DataFrame(result,columns=['result','sgpa','cgpa','exam_name', 'percentage','classgrade','course_id'])
         df=df[(df["exam_name"]=="HSC / 12th or Equivalent") | (df["exam_name"]=="HSC / 12th (Sci); or Equivalent")]
+        print(len(df))
         dataSet = {
             #data  df.loc[:,["percentage", "sgpa"]].set_index["x","y"].to_dict('records')
         }
