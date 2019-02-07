@@ -20,8 +20,10 @@ def home_view(request):
 	if request.method=="POST": 	#Obtaining selected value of corelation options
 		correl_type=int(request.POST['correl_type'])
 		
-		if correl_type==1:
+		if correl_type==3:
 			return redirect('dashboard:corr_view3') #Use namespace : to resolve URL name!!
+		elif correl_type==2:
+			return redirect('dashboard:corr_view2') #Use namespace : to resolve URL name!!
 	
 	context={}
 	return render(request, 'dashboard/home.html', context)
@@ -30,6 +32,11 @@ def home_view(request):
 def corr_view3(request):
     my_form = CorrForm()
     return render(request,'dashboard/corr_view3.html',{'form': my_form})
+
+@login_required
+def corr_view2(request):
+    my_form = CorrForm()
+    return render(request,'dashboard/corr_view2.html',{'form': my_form})
 
 @login_required
 def corr_view3_getEnrollYear(request):

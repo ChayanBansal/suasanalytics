@@ -3,10 +3,17 @@ import mysql.connector
 
 from django.db import connections
 cursor = connections['studentanalytics'].cursor()
-
-get_courses="SELECT `course_master`.`CM_Course_Name`,`course_master`.`CM_Course_ID` FROM `studentanalytics`.`course_master`"
-cursor.execute(get_courses)
+# hardcoding PG courses
+# Refer Lookup table
+get_pg_group="SELECT Title_ID FROM lookup_table WHERE title='M.B.A.'"
+cursor.execute(get_pg_group)
+pg_courses=[x for x in cursor.fetchall()]
+data = [tuple(str(x) for x in pg_courses[0])]
+get_courses_ug="SELECT `course_master`.`CM_Course_Name`,`course_master`.`CM_Course_ID` FROM `course_master` WHERE CM_Course_GroupID NOT IN ("+','.join(data[0]) +")"
+cursor.execute(get_courses_ug)
 courses_list=[ ( str(y),str(x) ) for x,y in cursor.fetchall()]
+
+#
 
 class CorrForm(forms.Form):
     course      = forms.ChoiceField(choices=courses_list+[('All','All')])

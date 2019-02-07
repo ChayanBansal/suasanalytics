@@ -1,22 +1,22 @@
 {% extends 'layout.html' %}
 {% block content %}
 <style>
-    
-    body{
+    body {
         margin-top: 6.5rem;
     }
-    .item{
+
+    .item {
         margin-bottom: 1rem;
     }
-    .item button{
+
+    .item button {
         font-size: 1rem;
         padding: 2rem;
         width: 100%;
     }
+</style>
 
-    </style>
-    
-    
+
 <div class="container d-flex justify-content-center align-items-center flex-column">
     <div class="title">
         <div class="alert">Please choose an option:</div>
@@ -24,22 +24,25 @@
 
     <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
         <form action="" method="post">
-        <div class="item">
-            <button class="btn btn-success" name="correl_type" value="1">Corelation of XII percentage with SGPA (UG)</button>
-        </div>
-        <div class="item">    
-                    <button class="btn btn-primary disabled" disabled name="correl_type" value="2">Corelation of Graduation percentage with SGPA (PG)</button>
-        </div>
-        <div class="item">
-                <button class="btn btn-success disabled" disabled name="correl_type" value="3"> Corelation of Hostel Admission with SGPA</button>
-        </div>
-        <div class="item">
-                <button class="btn btn-primary disabled" name="correl_type" value="4">Corelation of Attendance with SGPA</button>
+            <div class="item">
+                <button class="btn btn-success disabled" disabled name="correl_type" value="1"> Corelation of Hostel
+                    Admission with SGPA</button>
+            </div>
+            <div class="item">
+                <button class="btn btn-primary" name="correl_type" value="2">Corelation of Graduation
+                    percentage with SGPA (PG)</button>
+            </div>
+            <div class="item">
+                <button class="btn btn-success" name="correl_type" value="3">Corelation of XII percentage with SGPA
+                    (UG)</button>
+            </div>
+            <div class="item">
+                <button class="btn btn-primary disabled" name="correl_type" value="4">Corelation of Attendance with
+                    SGPA</button>
 
-        </div>
-        {% csrf_token %}
-    </form>
+            </div>
+            {% csrf_token %}
+        </form>
     </div>
 </div>
 {% endblock content %}
-

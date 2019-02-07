@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container" style="margin-top:10%">
+    <div class="row">
+        <div class="col" width="20%">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form.as_p }}    
+                </div>
+                
+            </form>
+            <div id="corr" class="form-group" style="margin-top:2%"></div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script src="/static/js/s.js"></script>
+            <script src="/static/js/ajax_corr_view3.js"></script>
+        </div>
+        <div class="col-9">
+            <canvas id="myChart"></canvas>
+            
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+            <script>
+                    var color = Chart.helpers.color;
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var scatterChart = Chart.Scatter(ctx, {
+                        data: {
+                            datasets: [{
+                                label: 'Percentage vs SGPA',
+                                data: [],
+                                borderColor: "rgb(0,0,0,0)",
+                                pointBackgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+                                pointBorderColor: window.chartColors.red,
+                                backgroundColor: color(window.chartColors.red).alpha(0).rgbString(),
+                            }
+                        ]
+                        },
+
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    type: 'linear',
+                                    position: 'bottom',
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: "Percentage"
+                                        }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Value'
+                                    }
+					            }]
+
+                        }
+                    }});
+
+            
+            </script>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
