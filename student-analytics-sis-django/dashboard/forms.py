@@ -24,7 +24,6 @@ class CorrForm(forms.Form):
     def setCourse(self,c_type):
         if c_type=="UG":
             get_courses_ug="SELECT `course_master`.`CM_Course_Name`,`course_master`.`CM_Course_ID` FROM `course_master` WHERE CM_Course_GroupID NOT IN ("+','.join(data[0]) +")"
-            print(get_courses_ug)
             cursor.execute(get_courses_ug)
             self.courses_list=[ ( str(y),str(x) ) for x,y in cursor.fetchall()]	
 

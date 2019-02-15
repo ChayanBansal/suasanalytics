@@ -76,6 +76,7 @@ WSGI_APPLICATION = 'studentanalyticssis.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
+    #Django DB
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'sis_user_db',
@@ -83,6 +84,7 @@ DATABASES = {
         'PASSWORD': 'suas@1234',
         'HOST': '127.0.0.1'
     },
+    #Analytics DB
     'studentanalytics':{
         'ENGINE': 'django.db.backends.mysql',
         'NAME':"studentanalytics",

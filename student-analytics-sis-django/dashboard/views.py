@@ -6,9 +6,6 @@ import pandas as pd
 
 
 
-# Create your views here.
-
-
 from django.db import connections
 cursor = connections['studentanalytics'].cursor()
 
@@ -24,9 +21,11 @@ cursor.execute(get_ug_group)
 ug_courses=[x for x in cursor.fetchall()]
 data_ug = [tuple(str(x) for x in ug_courses[0])]
 
+# Index page
 def index_view(request):
     return render(request, 'index.html', {})
 
+# dashboard Options page
 @login_required
 def home_view(request):
 
@@ -41,28 +40,30 @@ def home_view(request):
 	context={}
 	return render(request, 'dashboard/home.html', context)
 
+# UG percentage vs. SGPA page
 @login_required
 def corr_view3(request):
     my_form = CorrForm()
     my_form.setCourse("UG")
     return render(request,'dashboard/corr_view3.html',{'form': my_form})
 
+# PG percentage vs. SGPA page
 @login_required
 def corr_view2(request):
     my_form = CorrForm()
     my_form.setCourse("PG")
     return render(request,'dashboard/corr_view2.html',{'form': my_form})
 
+# AJAX request
 @login_required
 def corr_view2_getEnrollYear(request): #PG
     if request.method=="POST":
         my_form = getEnrollYearForm(request.POST, files=request.FILES)
-        print(my_form.errors)
         course = request.POST["course"]
         all="All"
         if course == all :
-
             get_year="SELECT DISTINCT substr(created_date,1,4), substr(created_date,1,4) FROM `student_master` student WHERE Course_ID IN (SELECT CM_Course_ID FROM course_master WHERE CM_Course_GroupID IN ("+','.join(data_pg[0]) +")"+")"
+            
         else:
             get_year="SELECT DISTINCT substr(created_date,1,4), substr(created_date,1,4) FROM `student_master` student WHERE Course_ID ='"+str(course)+"'"
         cursor = connections['studentanalytics'].cursor()
@@ -70,6 +71,7 @@ def corr_view2_getEnrollYear(request): #PG
         years=dict(cursor.fetchall())
         return JsonResponse(years)
 
+# AJAX request
 @login_required
 def corr_view3_getSection(request): #UG
     if request.method=="POST":
@@ -90,12 +92,11 @@ def corr_view3_getSection(request): #UG
         sections=dict(cursor.fetchall())
         return JsonResponse(sections)
 
-
+# AJAX request
 @login_required
 def corr_view3_getEnrollYear(request): #UG
     if request.method=="POST":
         my_form = getEnrollYearForm(request.POST, files=request.FILES)
-        print(my_form.errors)
         course = request.POST["course"]
         all="All"
         if course == all :
@@ -107,6 +108,7 @@ def corr_view3_getEnrollYear(request): #UG
         years=dict(cursor.fetchall())
         return JsonResponse(years)
 
+# AJAX request
 @login_required
 def corr_view2_getSection(request): #PG
     if request.method=="POST":
@@ -127,6 +129,7 @@ def corr_view2_getSection(request): #PG
         sections=dict(cursor.fetchall())
         return JsonResponse(sections)
 
+# AJAX request
 @login_required
 def corr_view3_getSection(request): #UG
     if request.method=="POST":
@@ -147,6 +150,7 @@ def corr_view3_getSection(request): #UG
         sections=dict(cursor.fetchall())
         return JsonResponse(sections)
 
+# AJAX request
 @login_required
 def corr_view3_updateVisualization(request):
     if request.method == "POST":
@@ -174,11 +178,11 @@ def corr_view3_updateVisualization(request):
             query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course+" AND sm.Division='"+section+"'"
         cursor.execute(query)
         result=cursor.fetchall()
-        print(list(result)[0])
+        
         result=list(result)
         df=pd.DataFrame(result,columns=['result','sgpa','cgpa','exam_name', 'percentage','classgrade','course_id'])
         df=df[(df["exam_name"]=="HSC / 12th or Equivalent") | (df["exam_name"]=="HSC / 12th (Sci); or Equivalent")]
-        print(len(df))
+        
         dataSet = {
             #data  df.loc[:,["percentage", "sgpa"]].set_index["x","y"].to_dict('records')
         }
@@ -189,8 +193,9 @@ def corr_view3_updateVisualization(request):
         data=df.to_dict('records')
         return JsonResponse({"data":data,"corr":df.corr().loc["x","y"]})
     
+# AJAX request
 @login_required
-def corr_view3_updateVisualization(request):
+def corr_view2_updateVisualization(request):
     if request.method == "POST":
         cursor = connections['studentanalytics'].cursor()
         course      = request.POST["course"]
@@ -216,11 +221,9 @@ def corr_view3_updateVisualization(request):
             query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course+" AND sm.Division='"+section+"'"
         cursor.execute(query)
         result=cursor.fetchall()
-        print(list(result)[0])
         result=list(result)
         df=pd.DataFrame(result,columns=['result','sgpa','cgpa','exam_name', 'percentage','classgrade','course_id'])
         df=df[(df["exam_name"]=="HSC / 12th or Equivalent") | (df["exam_name"]=="HSC / 12th (Sci); or Equivalent")]
-        print(len(df))
         dataSet = {
             #data  df.loc[:,["percentage", "sgpa"]].set_index["x","y"].to_dict('records')
         }

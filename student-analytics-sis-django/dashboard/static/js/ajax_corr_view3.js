@@ -83,7 +83,7 @@ function updateVisualization(section){
             {
                 removeData(scatterChart);
                 addData(scatterChart, [], responseData.data);
-                $('#corr').html("Correlation for the given data is "+ responseData.corr);
+                $('#corr').html("Correlation for the given data is "+ (Math.round(responseData.corr*10000)/10000)*100+"%");
             }
         });
     }
