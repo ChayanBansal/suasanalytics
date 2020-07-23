@@ -23,12 +23,12 @@ class CorrForm(forms.Form):
             
     def setCourse(self,c_type):
         if c_type=="UG":
-            get_courses_ug="SELECT `course_master`.`CM_Course_Name`,`course_master`.`CM_Course_ID` FROM `course_master` WHERE CM_Course_GroupID NOT IN ("+','.join(data[0]) +")"
+            get_courses_ug="SELECT `course_main`.`CM_Course_Name`,`course_main`.`CM_Course_ID` FROM `course_main` WHERE CM_Course_GroupID NOT IN ("+','.join(data[0]) +")"
             cursor.execute(get_courses_ug)
             self.courses_list=[ ( str(y),str(x) ) for x,y in cursor.fetchall()]	
 
         elif c_type=="PG":
-            get_courses_pg="SELECT `course_master`.`CM_Course_Name`,`course_master`.`CM_Course_ID` FROM `course_master` WHERE CM_Course_GroupID IN ("+','.join(data[0]) +")"
+            get_courses_pg="SELECT `course_main`.`CM_Course_Name`,`course_main`.`CM_Course_ID` FROM `course_main` WHERE CM_Course_GroupID IN ("+','.join(data[0]) +")"
             cursor.execute(get_courses_pg)
             self.courses_list=[ ( str(y),str(x) ) for x,y in cursor.fetchall()]
 
