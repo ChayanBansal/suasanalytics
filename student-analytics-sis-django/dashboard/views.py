@@ -62,10 +62,10 @@ def corr_view2_getEnrollYear(request): #PG
         course = request.POST["course"]
         all="All"
         if course == all :
-            get_year="SELECT DISTINCT substr(created_date,1,4), substr(created_date,1,4) FROM `student_master` student WHERE Course_ID IN (SELECT CM_Course_ID FROM course_master WHERE CM_Course_GroupID IN ("+','.join(data_pg[0]) +")"+")"
+            get_year="SELECT DISTINCT substr(created_date,1,4), substr(created_date,1,4) FROM `student_main` student WHERE Course_ID IN (SELECT CM_Course_ID FROM course_main WHERE CM_Course_GroupID IN ("+','.join(data_pg[0]) +")"+")"
             
         else:
-            get_year="SELECT DISTINCT substr(created_date,1,4), substr(created_date,1,4) FROM `student_master` student WHERE Course_ID ='"+str(course)+"'"
+            get_year="SELECT DISTINCT substr(created_date,1,4), substr(created_date,1,4) FROM `student_main` student WHERE Course_ID ='"+str(course)+"'"
         cursor = connections['studentanalytics'].cursor()
         cursor.execute(get_year)
         years=dict(cursor.fetchall())
@@ -80,13 +80,13 @@ def corr_view3_getSection(request): #UG
 
         all="All"
         if (course !=all) & (enroll_year !=all):
-            get_section="SELECT DISTINCT Division, DIVISION FROM student_master WHERE Course_ID="+course+" AND substr(created_date,1,4)="+enroll_year
+            get_section="SELECT DISTINCT Division, DIVISION FROM student_main WHERE Course_ID="+course+" AND substr(created_date,1,4)="+enroll_year
         elif (course !=all) & (enroll_year ==all):
-            get_section="SELECT DISTINCT Division, DIVISION FROM student_master WHERE Course_ID="+course
+            get_section="SELECT DISTINCT Division, DIVISION FROM student_main WHERE Course_ID="+course
         elif (course ==all) & (enroll_year !=all):
-            get_section="SELECT DISTINCT Division, DIVISION FROM student_master WHERE substr(created_date,1,4)="+enroll_year
+            get_section="SELECT DISTINCT Division, DIVISION FROM student_main WHERE substr(created_date,1,4)="+enroll_year
         else:
-            get_section="SELECT DISTINCT Division, DIVISION FROM student_master"
+            get_section="SELECT DISTINCT Division, DIVISION FROM student_main"
         cursor = connections['studentanalytics'].cursor()
         cursor.execute(get_section)
         sections=dict(cursor.fetchall())
@@ -100,9 +100,9 @@ def corr_view3_getEnrollYear(request): #UG
         course = request.POST["course"]
         all="All"
         if course == all :
-            get_year="SELECT DISTINCT substr(created_date,1,4), substr(created_date,1,4) FROM `student_master` student  WHERE Course_ID IN (SELECT CM_Course_ID FROM course_master WHERE CM_Course_GroupID IN ("+','.join(data_ug[0]) +")"+")"
+            get_year="SELECT DISTINCT substr(created_date,1,4), substr(created_date,1,4) FROM `student_main` student  WHERE Course_ID IN (SELECT CM_Course_ID FROM course_main WHERE CM_Course_GroupID IN ("+','.join(data_ug[0]) +")"+")"
         else:
-            get_year="SELECT DISTINCT substr(created_date,1,4), substr(created_date,1,4) FROM `student_master` student WHERE Course_ID ='"+str(course)+"'"
+            get_year="SELECT DISTINCT substr(created_date,1,4), substr(created_date,1,4) FROM `student_main` student WHERE Course_ID ='"+str(course)+"'"
         cursor = connections['studentanalytics'].cursor()
         cursor.execute(get_year)
         years=dict(cursor.fetchall())
@@ -117,13 +117,13 @@ def corr_view2_getSection(request): #PG
 
         all="All"
         if (course !=all) & (enroll_year !=all):
-            get_section="SELECT DISTINCT Division, DIVISION FROM student_master WHERE Course_ID="+course+" AND substr(created_date,1,4)="+enroll_year
+            get_section="SELECT DISTINCT Division, DIVISION FROM student_main WHERE Course_ID="+course+" AND substr(created_date,1,4)="+enroll_year
         elif (course !=all) & (enroll_year ==all):
-            get_section="SELECT DISTINCT Division, DIVISION FROM student_master WHERE Course_ID="+course
+            get_section="SELECT DISTINCT Division, DIVISION FROM student_main WHERE Course_ID="+course
         elif (course ==all) & (enroll_year !=all):
-            get_section="SELECT DISTINCT Division, DIVISION FROM student_master WHERE substr(created_date,1,4)="+enroll_year + " WHERE Course_ID IN (SELECT CM_Course_ID FROM course_master WHERE CM_Course_GroupID IN ("+','.join(data_pg[0]) +")"+")"
+            get_section="SELECT DISTINCT Division, DIVISION FROM student_main WHERE substr(created_date,1,4)="+enroll_year + " WHERE Course_ID IN (SELECT CM_Course_ID FROM course_main WHERE CM_Course_GroupID IN ("+','.join(data_pg[0]) +")"+")"
         else:
-            get_section="SELECT DISTINCT Division, DIVISION FROM student_master  WHERE Course_ID IN (SELECT CM_Course_ID FROM course_master WHERE CM_Course_GroupID IN ("+','.join(data_pg[0]) +")"+")"
+            get_section="SELECT DISTINCT Division, DIVISION FROM student_main  WHERE Course_ID IN (SELECT CM_Course_ID FROM course_main WHERE CM_Course_GroupID IN ("+','.join(data_pg[0]) +")"+")"
         cursor = connections['studentanalytics'].cursor()
         cursor.execute(get_section)
         sections=dict(cursor.fetchall())
@@ -138,13 +138,13 @@ def corr_view3_getSection(request): #UG
 
         all="All"
         if (course !=all) & (enroll_year !=all):
-            get_section="SELECT DISTINCT Division, DIVISION FROM student_master WHERE Course_ID="+course+" AND substr(created_date,1,4)="+enroll_year
+            get_section="SELECT DISTINCT Division, DIVISION FROM student_main WHERE Course_ID="+course+" AND substr(created_date,1,4)="+enroll_year
         elif (course !=all) & (enroll_year ==all):
-            get_section="SELECT DISTINCT Division, DIVISION FROM student_master WHERE Course_ID="+course
+            get_section="SELECT DISTINCT Division, DIVISION FROM student_main WHERE Course_ID="+course
         elif (course ==all) & (enroll_year !=all):
-            get_section="SELECT DISTINCT Division, DIVISION FROM student_master WHERE substr(created_date,1,4)="+enroll_year + " WHERE Course_ID IN (SELECT CM_Course_ID FROM course_master WHERE CM_Course_GroupID IN ("+','.join(data_ug[0]) +")"+")"
+            get_section="SELECT DISTINCT Division, DIVISION FROM student_main WHERE substr(created_date,1,4)="+enroll_year + " WHERE Course_ID IN (SELECT CM_Course_ID FROM course_main WHERE CM_Course_GroupID IN ("+','.join(data_ug[0]) +")"+")"
         else:
-            get_section="SELECT DISTINCT Division, DIVISION FROM student_master  WHERE Course_ID IN (SELECT CM_Course_ID FROM course_master WHERE CM_Course_GroupID IN ("+','.join(data_ug[0]) +")"+")"
+            get_section="SELECT DISTINCT Division, DIVISION FROM student_main  WHERE Course_ID IN (SELECT CM_Course_ID FROM course_main WHERE CM_Course_GroupID IN ("+','.join(data_ug[0]) +")"+")"
         cursor = connections['studentanalytics'].cursor()
         cursor.execute(get_section)
         sections=dict(cursor.fetchall())
@@ -161,21 +161,21 @@ def corr_view3_updateVisualization(request):
         all="All"
         query=""
         if( (section != "All") & (enroll_year !="All") & (course != "All")):
-            query=str("SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course+" AND substr(sm.created_date,1,4)="+enroll_year+" AND sm.Division='"+section+"'")
+            query=str("SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_main sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course+" AND substr(sm.created_date,1,4)="+enroll_year+" AND sm.Division='"+section+"'")
         elif ( (section ==all) & (enroll_year !=all ) & (course !=all)):
-            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course+" AND substr(sm.created_date,1,4)="+enroll_year
+            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_main sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course+" AND substr(sm.created_date,1,4)="+enroll_year
         elif( (section ==all ) & (enroll_year ==all ) & (course !=all)):
-            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course
+            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_main sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course
         elif( (section ==all ) & (enroll_year ==all ) & (course ==all )):
-            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID IN (SELECT CM_Course_ID FROM course_master WHERE CM_Course_GroupID IN ("+','.join(data_ug[0]) +")"+")"
+            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_main sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID IN (SELECT CM_Course_ID FROM course_main WHERE CM_Course_GroupID IN ("+','.join(data_ug[0]) +")"+")"
         elif( (section !=all) & (enroll_year ==all) & (course ==all )):
-            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Division='"+section+"' AND sm.Course_ID IN (SELECT CM_Course_ID FROM course_master WHERE CM_Course_GroupID IN ("+','.join(data_ug[0]) +")"+")"
+            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_main sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Division='"+section+"' AND sm.Course_ID IN (SELECT CM_Course_ID FROM course_main WHERE CM_Course_GroupID IN ("+','.join(data_ug[0]) +")"+")"
         elif( (section !=all) & (enroll_year !=all) & (course ==all )):
-            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND substr(sm.created_date,1,4)="+enroll_year+" AND sm.Division='"+section+"' AND sm.Course_ID IN (SELECT CM_Course_ID FROM course_master WHERE CM_Course_GroupID IN ("+','.join(data_ug[0]) +")"+")"
+            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_main sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND substr(sm.created_date,1,4)="+enroll_year+" AND sm.Division='"+section+"' AND sm.Course_ID IN (SELECT CM_Course_ID FROM course_main WHERE CM_Course_GroupID IN ("+','.join(data_ug[0]) +")"+")"
         elif( (section ==all ) & (enroll_year !=all) & (course ==all )):
-            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND substr(sm.created_date,1,4)="+enroll_year + " AND sm.Course_ID IN (SELECT CM_Course_ID FROM course_master WHERE CM_Course_GroupID IN ("+','.join(data_ug[0]) +")"+")"
+            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_main sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND substr(sm.created_date,1,4)="+enroll_year + " AND sm.Course_ID IN (SELECT CM_Course_ID FROM course_main WHERE CM_Course_GroupID IN ("+','.join(data_ug[0]) +")"+")"
         else:
-            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course+" AND sm.Division='"+section+"'"
+            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_main sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course+" AND sm.Division='"+section+"'"
         cursor.execute(query)
         result=cursor.fetchall()
         
@@ -204,21 +204,21 @@ def corr_view2_updateVisualization(request):
         all="All"
         query=""
         if( (section != "All") & (enroll_year !="All") & (course != "All")):
-            query=str("SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course+" AND substr(sm.created_date,1,4)="+enroll_year+" AND sm.Division='"+section+"'")
+            query=str("SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_main sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course+" AND substr(sm.created_date,1,4)="+enroll_year+" AND sm.Division='"+section+"'")
         elif ( (section ==all) & (enroll_year !=all ) & (course !=all)):
-            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course+" AND substr(sm.created_date,1,4)="+enroll_year
+            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_main sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course+" AND substr(sm.created_date,1,4)="+enroll_year
         elif( (section ==all ) & (enroll_year ==all ) & (course !=all)):
-            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course
+            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_main sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course
         elif( (section ==all ) & (enroll_year ==all ) & (course ==all )):
-            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID IN (SELECT CM_Course_ID FROM course_master WHERE CM_Course_GroupID IN ("+','.join(data_pg[0]) +")"+")"
+            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_main sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID IN (SELECT CM_Course_ID FROM course_main WHERE CM_Course_GroupID IN ("+','.join(data_pg[0]) +")"+")"
         elif( (section !=all) & (enroll_year ==all) & (course ==all )):
-            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Division='"+section+"' AND sm.Course_ID IN (SELECT CM_Course_ID FROM course_master WHERE CM_Course_GroupID IN ("+','.join(data_pg[0]) +")"+")"
+            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_main sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Division='"+section+"' AND sm.Course_ID IN (SELECT CM_Course_ID FROM course_main WHERE CM_Course_GroupID IN ("+','.join(data_pg[0]) +")"+")"
         elif( (section !=all) & (enroll_year !=all) & (course ==all )):
-            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND substr(sm.created_date,1,4)="+enroll_year+" AND sm.Division='"+section+"' AND sm.Course_ID IN (SELECT CM_Course_ID FROM course_master WHERE CM_Course_GroupID IN ("+','.join(data_pg[0]) +")"+")"
+            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_main sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND substr(sm.created_date,1,4)="+enroll_year+" AND sm.Division='"+section+"' AND sm.Course_ID IN (SELECT CM_Course_ID FROM course_main WHERE CM_Course_GroupID IN ("+','.join(data_pg[0]) +")"+")"
         elif( (section ==all ) & (enroll_year !=all) & (course ==all )):
-            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND substr(sm.created_date,1,4)="+enroll_year + " AND sm.Course_ID IN (SELECT CM_Course_ID FROM course_master WHERE CM_Course_GroupID IN ("+','.join(data_pg[0]) +")"+")"
+            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_main sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND substr(sm.created_date,1,4)="+enroll_year + " AND sm.Course_ID IN (SELECT CM_Course_ID FROM course_main WHERE CM_Course_GroupID IN ("+','.join(data_pg[0]) +")"+")"
         else:
-            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_master sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course+" AND sm.Division='"+section+"'"
+            query="SELECT srm.result, srm.SGPA, srm.CGPA, student.ExamName,student.percentage, student.ClassGrade,sm.Course_ID FROM srm_gradecard_issued srm, student_academic_details student, student_main sm WHERE sm.student_ID=srm.StudentID AND sm.student_ID=student.Student_ID AND srm.StudentID=student.Student_ID AND sm.Course_ID ="+course+" AND sm.Division='"+section+"'"
         cursor.execute(query)
         result=cursor.fetchall()
         result=list(result)
